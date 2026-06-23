@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gửi Yêu Cầu Chấm Công</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <div class="container">
+    <header class="glass-panel">
+      <div class="logo-area">
+        <div class="logo-icon">C</div>
+        <div class="logo-text">CHẤM CÔNG BV</div>
+      </div>
+      <nav class="nav-links">
+        <a href="user.html" class="nav-btn active">Nhân Viên</a>
+        <a href="admin.html" class="nav-btn">Quản Trị Viên (Admin)</a>
+      </nav>
+    </header>
+
+    <main class="main-layout user-layout">
+      <!-- Left side: Clock and Request Form -->
+      <div class="left-column" style="display: flex; flex-direction: column; gap: 2rem;">
+        <!-- Clock Card -->
+        <div class="glass-panel clock-card">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="z-index: 1;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <div id="clock-time" class="clock-time">00:00:00</div>
+          <div id="clock-date" class="clock-date">Đang tải thời gian...</div>
+        </div>
+
+        <!-- Request Form Card -->
+        <div class="glass-panel form-card">
+          <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; font-weight: 600;">Gửi Yêu Cầu Mới</h2>
+          <form id="requestForm">
+            <div class="form-group">
+              <label for="employeeName" class="form-label">Họ và Tên Nhân Viên</label>
+              <div class="input-wrapper">
+                <input type="text" id="employeeName" class="form-input" placeholder="Nhập tên đầy đủ của bạn..." required autocomplete="off">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Loại Yêu Cầu Chấm Công</label>
+              <div class="type-selector">
+                <label class="type-option">
+                  <input type="radio" name="requestType" value="check-in" checked>
+                  <div class="type-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                      <polyline points="10 17 15 12 10 7"></polyline>
+                      <line x1="15" y1="12" x2="3" y2="12"></line>
+                    </svg>
+                    <span>Vào Ca (Check-in)</span>
+                  </div>
+                </label>
+                
+                <label class="type-option">
+                  <input type="radio" name="requestType" value="check-out">
+                  <div class="type-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                      <polyline points="16 17 21 12 16 7"></polyline>
+                      <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Ra Ca (Check-out)</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" id="btnSubmit" class="btn-submit">
+              <span>Gửi Yêu Cầu Chấm Công</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right side: Recent Submissions Status Feed -->
+      <div class="glass-panel feed-card">
+        <div class="card-title-area">
+          <div class="card-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+            <span>Yêu Cầu Gửi Gần Đây</span>
+          </div>
+          <div id="request-count" class="badge-count">0</div>
+        </div>
+
+        <div id="recentRequestsList" class="request-list">
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <p>Chưa có yêu cầu nào được gửi hôm nay</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Hệ thống chấm công. Tất cả các yêu cầu được xử lý cục bộ.</p>
+    </footer>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="api-helper.js"></script>
+  <script src="user.js"></script>
+</body>
+</html>

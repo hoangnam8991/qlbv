@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng Quản Trị Chấm Công (Admin)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <div class="container">
+    <header class="glass-panel">
+      <div class="logo-area">
+        <div class="logo-icon" style="background: linear-gradient(135deg, var(--accent), var(--primary)); box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);">A</div>
+        <div class="logo-text">CHẤM CÔNG ADMIN</div>
+      </div>
+      <nav class="nav-links">
+        <a href="user.html" class="nav-btn">Nhân Viên</a>
+        <a href="admin.html" class="nav-btn active">Quản Trị Viên (Admin)</a>
+      </nav>
+    </header>
+
+    <main style="animation: fadeInUp 0.8s ease-out;">
+      <!-- Statistics Dashboard Grid -->
+      <div class="stats-grid">
+        <!-- Stat 1: Total -->
+        <div class="glass-panel stat-card">
+          <div class="stat-icon" style="background: rgba(139, 92, 246, 0.15); color: var(--primary);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <span id="stat-total" class="stat-val">0</span>
+            <span class="stat-lbl">Tổng yêu cầu</span>
+          </div>
+        </div>
+
+        <!-- Stat 2: Pending -->
+        <div class="glass-panel stat-card">
+          <div class="stat-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--status-pending);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 14 14"></polyline>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <span id="stat-pending" class="stat-val" style="color: var(--status-pending);">0</span>
+            <span class="stat-lbl">Chờ phê duyệt</span>
+          </div>
+        </div>
+
+        <!-- Stat 3: Accepted (Saved) -->
+        <div class="glass-panel stat-card">
+          <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--status-accepted);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <span id="stat-accepted" class="stat-val" style="color: var(--status-accepted);">0</span>
+            <span class="stat-lbl">Đã duyệt &amp; Lưu</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Admin Sections -->
+      <div class="admin-section">
+        <div class="section-header">
+          <h2 class="section-title">Yêu Cầu Chờ Phê Duyệt</h2>
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <!-- Search bar -->
+            <input type="text" id="adminSearch" class="form-input" placeholder="Tìm tên nhân viên..." style="width: 250px; padding: 0.5rem 1rem; font-size: 0.9rem;">
+            
+            <button id="btnRefresh" class="btn-submit" style="width: auto; padding: 0.5rem 1rem; font-size: 0.9rem; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); box-shadow: none;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+              <span>Làm mới</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="glass-panel" style="padding: 1rem;">
+          <div class="admin-table-container">
+            <table class="admin-table" id="pendingTable">
+              <thead>
+                <tr>
+                  <th>Nhân Viên</th>
+                  <th>Loại Yêu Cầu</th>
+                  <th>Thời Gian Gửi</th>
+                  <th>Trạng Thái</th>
+                  <th>Hành Động</th>
+                </tr>
+              </thead>
+              <tbody id="pendingList">
+                <!-- Will be populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Section -->
+      <div class="admin-section">
+        <div class="section-header">
+          <h2 class="section-title">Lịch Sử Yêu Cầu Đã Xử Lý</h2>
+        </div>
+        
+        <div class="glass-panel" style="padding: 1rem;">
+          <div class="admin-table-container">
+            <table class="admin-table" id="historyTable">
+              <thead>
+                <tr>
+                  <th>Nhân Viên</th>
+                  <th>Loại Yêu Cầu</th>
+                  <th>Thời Gian Gửi</th>
+                  <th>Thời Gian Duyệt</th>
+                  <th>Trạng Thái</th>
+                </tr>
+              </thead>
+              <tbody id="historyList">
+                <!-- Will be populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Hệ thống chấm công. Dữ liệu đã duyệt được lưu trực tiếp tại file <code style="background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; color: var(--secondary);">data/database.json</code> trên máy tính.</p>
+    </footer>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="api-helper.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
