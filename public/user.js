@@ -63,7 +63,7 @@ function showToast(message, type = 'success') {
 // 3. Fetch Recent Requests
 async function fetchRequests() {
   try {
-    const res = await fetch('/api/requests');
+    const res = await apiFetch('/api/requests');
     if (!res.ok) throw new Error('Không thể tải danh sách yêu cầu');
     
     allRequests = await res.json();
@@ -153,7 +153,7 @@ requestForm.addEventListener('submit', async (e) => {
   btnSubmit.querySelector('span').textContent = 'Đang gửi...';
 
   try {
-    const res = await fetch('/api/requests', {
+    const res = await apiFetch('/api/requests', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

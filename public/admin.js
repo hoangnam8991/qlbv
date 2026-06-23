@@ -46,7 +46,7 @@ function showToast(message, type = 'success') {
 // 2. Fetch Requests from server
 async function fetchRequests(isManual = false) {
   try {
-    const res = await fetch('/api/requests');
+    const res = await apiFetch('/api/requests');
     if (!res.ok) throw new Error('Không thể kết nối máy chủ');
     
     allRequests = await res.json();
@@ -187,7 +187,7 @@ function renderDashboard() {
 // 4. Accept / Approve Request (Save Locally on Server)
 window.acceptRequest = async function(id) {
   try {
-    const res = await fetch(`/api/requests/${id}/accept`, {
+    const res = await apiFetch(`/api/requests/${id}/accept`, {
       method: 'POST'
     });
     const data = await res.json();
@@ -207,7 +207,7 @@ window.acceptRequest = async function(id) {
 // 5. Reject Request
 window.rejectRequest = async function(id) {
   try {
-    const res = await fetch(`/api/requests/${id}/reject`, {
+    const res = await apiFetch(`/api/requests/${id}/reject`, {
       method: 'POST'
     });
     const data = await res.json();
